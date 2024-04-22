@@ -26,7 +26,7 @@ namespace ToDoWonderBitsBackend.Tests
         public async Task GetAllItemsAsync_ReturnsAllItems()
         {
             // Arrange
-            var todos = new List<TodoItem> { new TodoItem { Id = 1, Name = "Test", IsComplete = false } };
+            var todos = new List<TodoItem> { new TodoItem("Test") { Id = 1, IsComplete = false } };
             _mockRepo.Setup(repo => repo.GetAllAsync()).ReturnsAsync(todos);
 
             // Act
@@ -44,7 +44,7 @@ namespace ToDoWonderBitsBackend.Tests
         public async Task GetItemByIdAsync_ReturnsItem()
         {
             // Arrange
-            var todo = new TodoItem { Id = 1, Name = "Test", IsComplete = false };
+            var todo = new TodoItem("Test") { Id = 1, IsComplete = false };
             _mockRepo.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(todo);
 
             // Act
@@ -62,7 +62,7 @@ namespace ToDoWonderBitsBackend.Tests
         public async Task AddItemAsync_AddsItem()
         {
             // Arrange
-            var todo = new TodoItem { Name = "New Task", IsComplete = false };
+            var todo = new TodoItem("New Task") { IsComplete = false };
             _mockRepo.Setup(repo => repo.AddAsync(It.IsAny<TodoItem>())).Returns(Task.CompletedTask).Verifiable();
 
             // Act
@@ -79,12 +79,12 @@ namespace ToDoWonderBitsBackend.Tests
         public async Task UpdateItemAsync_UpdatesItem()
         {
             // Arrange
-            var existingItem = new TodoItem { Id = 1, Name = "Test", IsComplete = false };
+            var existingItem = new TodoItem("Test") { Id = 1, IsComplete = false };
             _mockRepo.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(existingItem);
             _mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<TodoItem>())).Returns(Task.CompletedTask).Verifiable();
 
             // Act
-            await _service.UpdateItemAsync(new TodoItem { Id = 1, Name = "Updated Test", IsComplete = true });
+            await _service.UpdateItemAsync(new TodoItem("Updated Test") { Id = 1, IsComplete = true });
 
             // Assert
             _mockRepo.Verify(repo => repo.UpdateAsync(It.IsAny<TodoItem>()), Times.Once);
@@ -97,7 +97,7 @@ namespace ToDoWonderBitsBackend.Tests
         public async Task DeleteItemAsync_DeletesItem()
         {
             // Arrange
-            var existingItem = new TodoItem { Id = 1, Name = "Test", IsComplete = false };
+            var existingItem = new TodoItem("Test") { Id = 1, IsComplete = false };
             _mockRepo.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(existingItem);
             _mockRepo.Setup(repo => repo.DeleteAsync(1)).Returns(Task.CompletedTask).Verifiable();
 
