@@ -1,12 +1,13 @@
-﻿using ToDoWonderBitsBackend.Domain.Models;
+﻿using ToDoWonderBitsBackend.Application.Services.Interfaces;
+using ToDoWonderBitsBackend.Domain.Models;
 using ToDoWonderBitsBackend.Domain.Ports;
 
-namespace ToDoWonderBitsBackend.Domain.Services
+namespace ToDoWonderBitsBackend.Application.Services
 {
     /// <summary>
     /// Servicio de dominio para manejar operaciones relacionadas con TodoItems.
     /// </summary>
-    public class TodoService : ITodoService
+    public class TodoService : ITodoItemService
     {
         private readonly ITodoItemRepository _todoItemRepository;
 
