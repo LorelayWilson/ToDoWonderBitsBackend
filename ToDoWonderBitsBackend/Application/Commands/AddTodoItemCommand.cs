@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using ToDoWonderBitsBackend.Domain.Models;
-using ToDoWonderBitsBackend.Infrastructure.Persistence.Repositories.Interface;
+using ToDoWonderBitsBackend.Domain.Ports;
 
 namespace ToDoWonderBitsBackend.Application.Commands
 {

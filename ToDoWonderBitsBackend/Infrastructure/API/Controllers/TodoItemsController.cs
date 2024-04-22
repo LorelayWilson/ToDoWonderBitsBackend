@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ToDoWonderBitsBackend.Domain.Models;
-using ToDoWonderBitsBackend.DTOs;
 
 namespace ToDoWonderBitsBackend.Infrastructure.API.Controllers
 {
