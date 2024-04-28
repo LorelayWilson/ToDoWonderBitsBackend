@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace ToDoWonderBitsBackend.Domain.Models
 {
@@ -7,36 +8,52 @@ namespace ToDoWonderBitsBackend.Domain.Models
     /// </summary>
     public class TodoItem
     {
-        /// <summary>
-        /// Identificador único del ítem.
-        /// </summary>
         [Key]
         public int Id { get; set; }
+        [Required(ErrorMessage = "Introduce a description")]
+        public string Description { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Introduce a due date")]
+        public DateTime? DueDate { get; set; }
+        [Required(ErrorMessage = "Introduce a closed date")]
+        public DateTime? ClosedDate { get; set; }
+        public int? CategoryId { get; set; }
+        [ValidateNever]
+        public Category Category { get; set; } = null!;
+        [Required(ErrorMessage = "Select a status")]
+        public int StatusId { get; set; }
+        [ValidateNever]
+        public Status Status { get; set; } = null!;
+        public bool Overdue => StatusId == 1 && DueDate < DateTime.Today;
+        public int Priority { get; set; }
 
         /// <summary>
-        /// Nombre o descripción del ítem de la tarea.
+        /// Actualiza el estado del item.
         /// </summary>
-        [Required]
-        public string Name { get; set; } 
-
-        /// <summary>
-        /// Indica si el ítem de la tarea ha sido completado.
-        /// </summary>
-        public bool IsComplete { get; set; }
-
-        /// <summary>
-        /// Inicializa una nueva instancia de TodoItem asegurándose de que el nombre no sea nulo ni vacío.
-        /// </summary>
-        /// <param name="name">Nombre requerido para el ítem de la tarea.</param>
-        /// <exception cref="ArgumentException">Se lanza si 'name' es nulo o vacío.</exception>
-        public TodoItem(string name)
+        /// <param name="newStatus">Nuevo estado para el ítem.</param>
+        public void UpdateStatus(int newStatus)
         {
-            if (string.IsNullOrEmpty(name))
+            if (StatusId != newStatus && (newStatus == 1|| newStatus == 2))
             {
-                throw new ArgumentException("Name cannot be null or empty.", nameof(name));
-            }
+                StatusId = newStatus;
 
-            Name = name;
+                if (newStatus == 2)
+                {
+                    ClosedDate = DateTime.Now;  
+                }
+            }
         }
+
+        /// <summary>
+        /// Actualiza la categoría del ítem.
+        /// </summary>
+        /// <param name="newCategoryId">Nuevo ID de categoría para el ítem.</param>
+        public void UpdateCategory(int newCategoryId)
+        {
+             if (newCategoryId != this.CategoryId)
+            {
+                this.CategoryId = newCategoryId;
+            }
+        }
+
     }
 }

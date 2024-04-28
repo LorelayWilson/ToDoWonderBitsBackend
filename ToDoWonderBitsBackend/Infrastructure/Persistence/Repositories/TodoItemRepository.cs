@@ -1,35 +1,52 @@
-﻿using ToDoWonderBitsBackend.Domain.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ToDoWonderBitsBackend.Domain.Models;
 using ToDoWonderBitsBackend.Domain.Ports;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System;
+using ToDoWonderBitsBackend.Infrastructure.Persistence;
 
-
-namespace ToDoWonderBitsBackend.Infrastructure.Persistence.Repositories
+namespace ToDoWonderBitsBackend.Infrastructure.Repositories
 {
     public class TodoItemRepository : ITodoItemRepository
     {
-        Task ITodoItemRepository.AddAsync(TodoItem item)
+        private readonly TodoContext _context;
+
+        public TodoItemRepository(TodoContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        Task ITodoItemRepository.DeleteAsync(int id)
+        public async Task<IEnumerable<TodoItem>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _context.TodoItems.ToListAsync();
         }
 
-        Task<IEnumerable<TodoItem>> ITodoItemRepository.GetAllAsync()
+        public async Task<TodoItem> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.TodoItems.FindAsync(id);
         }
 
-        Task<TodoItem> ITodoItemRepository.GetByIdAsync(int id)
+        public async Task CreateAsync(TodoItem item)
         {
-            throw new NotImplementedException();
+            _context.TodoItems.Add(item);
+            await _context.SaveChangesAsync();
         }
 
-        Task ITodoItemRepository.UpdateAsync(TodoItem item)
+        public async Task UpdateAsync(TodoItem item)
         {
-            throw new NotImplementedException();
+            _context.Entry(item).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var item = await _context.TodoItems.FindAsync(id);
+            if (item != null)
+            {
+                _context.TodoItems.Remove(item);
+                await _context.SaveChangesAsync();
+            }
         }
     }
-
 }

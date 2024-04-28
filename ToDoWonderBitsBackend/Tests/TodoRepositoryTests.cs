@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoWonderBitsBackend.Domain.Models;
-using ToDoWonderBitsBackend.Infrastructure.Persistence.Repositories;
 using Xunit;
 
 namespace ToDoWonderBitsBackend.Tests

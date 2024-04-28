@@ -10,7 +10,7 @@ namespace ToDoWonderBitsBackend.Domain.Ports
     {
         Task<TodoItem> GetByIdAsync(int id);
         Task<IEnumerable<TodoItem>> GetAllAsync();
-        Task AddAsync(TodoItem item);
+        Task CreateAsync(TodoItem item);
         Task UpdateAsync(TodoItem item);
         Task DeleteAsync(int id);
     }
