@@ -21,6 +21,24 @@ namespace ToDoWonderBitsBackend.Application.Services
         }
 
         /// <summary>
+        /// Obtiene todos los ítems de esttados.
+        /// </summary>
+        /// <returns>Una colección de todos los Status.</returns>
+        public async Task<IEnumerable<Status>> GetAllStatusAsync()
+        {
+            return await _todoItemRepository.GetAllStatusAsync();
+        }
+
+        /// <summary>
+        /// Obtiene todos los ítems de categorias.
+        /// </summary>
+        /// <returns>Una colección de todos los Category.</returns>
+        public async Task<IEnumerable<Category>> GetAllCategoryAsync()
+        {
+            return await _todoItemRepository.GetAllCategoryAsync();
+        }
+
+        /// <summary>
         /// Obtiene todos los ítems de tareas pendientes.
         /// </summary>
         /// <returns>Una colección de todos los TodoItems.</returns>

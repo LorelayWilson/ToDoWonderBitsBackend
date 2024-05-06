@@ -7,13 +7,13 @@ namespace ToDoWonderBitsBackend.Domain.Dtos
     /// </summary>
     public class UserCreateDto
     {
-        [Required(ErrorMessage = "Username es obligatorio.")]
-        public string Username { get; set; }
 
-        [Required(ErrorMessage = "Password es obligatoria.")]
+        [Required(ErrorMessage = "Username is required.")]
+        public string Username { get; set; }
+        [Required(ErrorMessage = "Password is required.")]
         public string Password { get; set; }
 
-        [EmailAddress(ErrorMessage = "Dirección de correo electrónico inválida.")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
         public string Email { get; set; }
 
         public string? FullName { get; set; }

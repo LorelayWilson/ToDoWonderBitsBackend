@@ -8,6 +8,8 @@ namespace ToDoWonderBitsBackend.Application.Services.Interfaces
     public interface ITodoItemQueryHandler
     {
         Task<IEnumerable<TodoItem>> GetAllItemsAsync();
+        Task<IEnumerable<Status>> GetAllStatusAsync();
+        Task<IEnumerable<Category>> GetAllCategoryAsync();
         Task<TodoItem> GetItemByIdAsync(int id);
     }
 }

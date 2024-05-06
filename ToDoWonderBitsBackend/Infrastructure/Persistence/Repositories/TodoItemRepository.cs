@@ -22,6 +22,16 @@ namespace ToDoWonderBitsBackend.Infrastructure.Repositories
             return await _context.TodoItems.ToListAsync();
         }
 
+        public async Task<IEnumerable<Category>> GetAllCategoryAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Status>> GetAllStatusAsync()
+        {
+            return await _context.Statuses.ToListAsync();
+        }
+
         public async Task<TodoItem> GetByIdAsync(int id)
         {
             return await _context.TodoItems.FindAsync(id);

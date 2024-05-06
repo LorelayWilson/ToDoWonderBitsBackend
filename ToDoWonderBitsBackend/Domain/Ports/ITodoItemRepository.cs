@@ -8,8 +8,11 @@ namespace ToDoWonderBitsBackend.Domain.Ports
     /// </summary>
     public interface ITodoItemRepository
     {
+
         Task<TodoItem> GetByIdAsync(int id);
         Task<IEnumerable<TodoItem>> GetAllAsync();
+        Task<IEnumerable<Status>> GetAllStatusAsync();
+        Task<IEnumerable<Category>> GetAllCategoryAsync();
         Task CreateAsync(TodoItem item);
         Task UpdateAsync(TodoItem item);
         Task DeleteAsync(int id);

@@ -24,12 +24,16 @@ namespace ToDoWonderBitsBackend.Application.Handlers
 
         public async Task<string> Login(string username, string password)
         {
-            if(username == null || password == null) {
+            if (username == null || password == null)
+            {
                 throw new ArgumentException("User and password cannot be null");
             }
 
             User user = await GetUserByUsernameAsync(username);
-            if(user == null || user.Password!=password) { throw new ArgumentException("Username or password does not exist"); }
+            if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                throw new ArgumentException("Username or password is incorrect");
+            }
 
             var token = GenerateJwtToken(user.Id);
             return token;

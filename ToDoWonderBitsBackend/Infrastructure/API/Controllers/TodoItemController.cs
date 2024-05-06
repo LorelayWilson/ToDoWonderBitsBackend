@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using ToDoWonderBitsBackend.Domain.Models;
 
 namespace ToDoWonderBitsBackend.Infrastructure.API.Controllers
 {
@@ -30,6 +31,37 @@ namespace ToDoWonderBitsBackend.Infrastructure.API.Controllers
             _queryService = queryService;
             _mapper = mapper;
             _logger = logger;
+        }
+
+        [HttpGet("GetAllCategory")]
+        public async Task<ActionResult<IEnumerable<Category>>> GetAllCategory()
+        {
+            try
+            {
+                var items = await _queryService.GetAllCategoryAsync();
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving status items");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+
+        [HttpGet("GetAllStatus")]
+        public async Task<ActionResult<IEnumerable<Status>>> GetAllStatus()
+        {
+            try
+            {
+                var items = await _queryService.GetAllStatusAsync();
+                return Ok(items);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving status");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
         }
 
         [HttpGet("GetAll")]
@@ -129,5 +161,6 @@ namespace ToDoWonderBitsBackend.Infrastructure.API.Controllers
                 return StatusCode(500, "An error occurred while deleting the item.");
             }
         }
+
     }
 }

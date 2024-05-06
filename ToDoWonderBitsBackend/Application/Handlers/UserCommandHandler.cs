@@ -26,6 +26,9 @@ namespace ToDoWonderBitsBackend.Application.Handlers
                 throw new ArgumentNullException(nameof(userDto));
             }
             var user = _mapper.Map<User>(userDto);
+            // Cifrar la contraseña antes de guardar
+            user.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+
 
             await _userRepository.CreateAsync(user);
         }
@@ -44,6 +47,11 @@ namespace ToDoWonderBitsBackend.Application.Handlers
             }
 
             _mapper.Map(userDto, user);
+            // Cifrar la nueva contraseña antes de actualizar
+            if (!string.IsNullOrEmpty(userDto.Password))
+            {
+                user.Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+            }
 
             await _userRepository.UpdateAsync(user);
         }
